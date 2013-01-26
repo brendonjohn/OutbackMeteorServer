@@ -66,4 +66,4 @@ http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
   
   res.end('Hello, this is the log list.... <ul>'+logs_list+' </ul>');
-}).listen(serious_port);
+}).listen(process.env.PORT || 12345);

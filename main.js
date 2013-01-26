@@ -1,10 +1,9 @@
 var logs = [];
 var player_list = {};
-
+var serious_port = 41234;
 
 var DEBUG = true;
 var dgram = require("dgram");
-var jQuery = require("jQuery");
  
 var server = dgram.createSocket("udp4");
 
@@ -51,7 +50,7 @@ server.on("listening", function () {
       address.address + ":" + address.port);
 });
 
-server.bind(41234);
+server.bind(serious_port);
 
 
 

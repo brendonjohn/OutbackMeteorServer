@@ -1,23 +1,38 @@
 var logs = [];
+var player_list = {};
 
+
+var DEBUG = true;
 var dgram = require("dgram");
+var jQuery = require("jQuery");
 
 var server = dgram.createSocket("udp4");
 
 server.on("message", function (msg, rinfo) {
 
-	logs.push(msg);
-
-	console.log("server got: " + msg + " from " +
-	rinfo.address + ":" + rinfo.port);
+	if (DEBUG == true){
+		logs.push((new Date()) + ": " + msg
+		+ ", "+ rinfo.address
+		+ ", "+ rinfo.port);	
+		console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
+	
+	}
+	
+	//Check if address is not yet playing
+	if (player_list[rinfo.address] == null){
+	}
+	
+	//Todo: interpret the message
+	new_location = msg;
+		
+	//set the new location
+	player_list[rinfo.address] = new_location;
+  	
 });
 
 //receive udp packets from game clients
 server.on("listening", function () {
   var address = server.address();
-  
-  //Check if address is currently playing
-  	//assign id for player if it doesn't yet exist
   
   //receive current location of the 
   console.log("server listening " +

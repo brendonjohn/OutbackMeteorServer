@@ -5,8 +5,15 @@ var player_list = {};
 var DEBUG = true;
 var dgram = require("dgram");
 var jQuery = require("jQuery");
-
-var server = dgram.createSocket("udp4");
+ 
+var server = dgram.createSocket("udp4", function(msg, rinfo){
+		//The response to the client that has submitted the packet
+		var buf = new Buffer(player_list.toString());
+		server.send(buf, 0, buf.length,rinfo.port, rinfo.address, function(err, sent) {
+			//the callback for successfully sending
+		});
+	}
+);
 
 server.on("message", function (msg, rinfo) {
 
@@ -15,7 +22,6 @@ server.on("message", function (msg, rinfo) {
 		+ ", "+ rinfo.address
 		+ ", "+ rinfo.port);	
 		console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
-	
 	}
 	
 	//Check if address is not yet playing

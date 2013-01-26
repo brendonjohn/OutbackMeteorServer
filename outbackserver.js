@@ -33,7 +33,7 @@ var http = require('http');
 http.createServer(function (req, res) {
   var logs_list = "";
   
-  for (int i =0; i<logs.length; i++){
+  for (var i =0; i<logs.length; i++){
 	  logs_list+= "<li>"+logs[i]+"</li>";
   }
   

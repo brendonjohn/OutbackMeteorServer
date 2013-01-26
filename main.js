@@ -1,6 +1,6 @@
 var logs = [];
 var player_list = {};
-var serious_port = process.env.PORT || 8813;
+var serious_port = 8813;
 
 var DEBUG = true;
 var dgram = require("dgram");
@@ -66,4 +66,4 @@ http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
   
   res.end('Hello, this is the log list.... <ul>'+logs_list+' </ul>');
-}).listen(process.env.PORT || 12345);
+}).listen(12345);

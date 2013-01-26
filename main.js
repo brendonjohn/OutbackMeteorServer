@@ -1,6 +1,6 @@
 var logs = [];
 var player_list = {};
-var serious_port = 8813;
+var serious_port = process.env.PORT || 8813;
 
 var DEBUG = true;
 var dgram = require("dgram");

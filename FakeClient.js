@@ -1,6 +1,6 @@
 var logs = [];
-var serious_port = 8813;
-var destination = ""
+var serious_port = process.env.PORT || 1337;
+var destination = "outbackmeteor.hp.af.cm"
 var dgram = require('dgram');
 
 var client = dgram.createSocket("udp4", function(msg, rinfo){

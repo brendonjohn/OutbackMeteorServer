@@ -6,14 +6,7 @@ var DEBUG = true;
 var dgram = require("dgram");
 var jQuery = require("jQuery");
  
-var server = dgram.createSocket("udp4", function(msg, rinfo){
-		//The response to the client that has submitted the packet
-		var buf = new Buffer(player_list.toString());
-		server.send(buf, 0, buf.length,rinfo.port, rinfo.address, function(err, sent) {
-			//the callback for successfully sending
-		});
-	}
-);
+var server = dgram.createSocket("udp4");
 
 server.on("message", function (msg, rinfo) {
 
@@ -33,6 +26,19 @@ server.on("message", function (msg, rinfo) {
 		
 	//set the new location
 	player_list[rinfo.address] = new_location;
+	
+	//The response to the client that has submitted the packet
+	var buf = new Buffer(player_list.toString());
+	
+	server.send(buf, 0, buf.length,rinfo.port, rinfo.address, function(err, sent) {
+		//the callback for successfully sending
+		if(DEBUG==true){
+			//console.log("confirmed location: " + player_list[rinfo.address] + ", to: "+rinfo.address);
+		}
+	});
+	
+	console.log("location: " + player_list[rinfo.address] + ", for: "+rinfo.address);
+
   	
 });
 

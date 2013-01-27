@@ -7,6 +7,14 @@ var dgram = require("dgram");
  
 var server = dgram.createSocket("udp4");
 
+function PlayerListString(players){
+	var returnString = "";
+	for (var id in players){
+		returnString += id + ":"+players[id]+","
+	}	
+	return returnString;
+}
+
 server.on("message", function (msg, rinfo) {
 
 	if (DEBUG == true){
@@ -27,7 +35,7 @@ server.on("message", function (msg, rinfo) {
 	player_list[rinfo.address] = new_location;
 	
 	//The response to the client that has submitted the packet
-	var buf = new Buffer(JSON.stringify(player_list));
+	var buf = new Buffer(PlayerListString(player_list));
 	
 	server.send(buf, 0, buf.length,rinfo.port, rinfo.address, function(err, sent) {
 		//the callback for successfully sending
@@ -65,5 +73,6 @@ http.createServer(function (req, res) {
   
   res.writeHead(200, {'Content-Type': 'text/html'});
   
-  res.end('Hello, this is the log list.... <ul>'+logs_list+' </ul>');
+  res.end(PlayerListString(player_list)+
+  '<br />Hello, this is the log list.... <ul>'+logs_list+' </ul>');
 }).listen(12345);

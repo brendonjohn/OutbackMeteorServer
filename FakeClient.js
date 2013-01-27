@@ -1,6 +1,6 @@
 var logs = [];
 var serious_port = 8813;
-var destination = "ec2-50-18-97-146.us-west-1.compute.amazonaws.com"
+var destination = "127.0.0.1"
 var dgram = require('dgram');
 
 var client = dgram.createSocket("udp4", function(msg, rinfo){
@@ -8,7 +8,7 @@ var client = dgram.createSocket("udp4", function(msg, rinfo){
 	
 });
 
-SubmitLocationSequence(5,200);
+SubmitLocationSequence(10,200);
 
 function SubmitLocationSequence(number, currentLocation){
 	var message = new Buffer(currentLocation.toString()) ;

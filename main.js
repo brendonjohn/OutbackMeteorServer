@@ -27,7 +27,7 @@ server.on("message", function (msg, rinfo) {
 	player_list[rinfo.address] = new_location;
 	
 	//The response to the client that has submitted the packet
-	var buf = new Buffer("hey simon");
+	var buf = new Buffer(JSON.stringify(player_list));
 	
 	server.send(buf, 0, buf.length,rinfo.port, rinfo.address, function(err, sent) {
 		//the callback for successfully sending

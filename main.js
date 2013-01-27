@@ -11,7 +11,12 @@ function PlayerListString(players, current_user){
 	var returnString = "";
 	for (var id in players){
 		if (players[id] != current_user){
-			returnString += id + ":"+players[id]+",";
+			if (returnString.length != 0){
+				returnString += ","+id + ":"+players[id];
+			}
+			else{
+				returnString += id + ":"+players[id];
+			}
 		}
 	}	
 	return returnString;

@@ -10,7 +10,7 @@ var server = dgram.createSocket("udp4");
 server.on("message", function (msg, rinfo) {
 
 	if (DEBUG == true){
-		logs.push((new Date()) + ": " + msg
+		logs.push((new Date()) + ": origin" + msg
 		+ ", "+ rinfo.address
 		+ ", "+ rinfo.port);	
 		console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
@@ -27,7 +27,7 @@ server.on("message", function (msg, rinfo) {
 	player_list[rinfo.address] = new_location;
 	
 	//The response to the client that has submitted the packet
-	var buf = new Buffer(player_list.toString());
+	var buf = new Buffer("hey simon");
 	
 	server.send(buf, 0, buf.length,rinfo.port, rinfo.address, function(err, sent) {
 		//the callback for successfully sending

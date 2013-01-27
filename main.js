@@ -19,6 +19,9 @@ function PlayerListString(players, current_user){
 			}
 		}
 	}	
+	if (returnString == ""){
+		returnString = "None";
+	}
 	return returnString;
 }
 

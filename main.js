@@ -16,23 +16,23 @@ function PlayerListString(players){
 }
 
 server.on("message", function (msg, rinfo) {
-
+	var user_id = rinfo.address+":"+rinfo.port;
 	if (DEBUG == true){
 		logs.push((new Date()) + ": origin" + msg
 		+ ", "+ rinfo.address
 		+ ", "+ rinfo.port);	
 		console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port);
 	}
-	
+		
 	//Check if address is not yet playing
-	if (player_list[rinfo.address] == null){
+	if (player_list[user_id] == null){
 	}
 	
 	//Todo: interpret the message
 	new_location = msg;
 		
 	//set the new location
-	player_list[rinfo.address] = new_location;
+	player_list[user_id] = new_location;
 	
 	//The response to the client that has submitted the packet
 	var buf = new Buffer(PlayerListString(player_list));
@@ -43,10 +43,8 @@ server.on("message", function (msg, rinfo) {
 			//console.log("confirmed location: " + player_list[rinfo.address] + ", to: "+rinfo.address);
 		}
 	});
-	
-	console.log("location: " + player_list[rinfo.address] + ", for: "+rinfo.address);
 
-  	
+	console.log("location: " + player_list[user_id] + ", for: "+rinfo.address);
 });
 
 //receive udp packets from game clients

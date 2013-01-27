@@ -10,7 +10,7 @@ var server = dgram.createSocket("udp4");
 function PlayerListString(players, current_user){
 	var returnString = "";
 	for (var id in players){
-		if (players[id] != current_user){
+		if (id != current_user){
 			if (returnString.length != 0){
 				returnString += ","+id + "-"+players[id];
 			}

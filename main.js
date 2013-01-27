@@ -15,7 +15,7 @@ function PlayerListString(players, current_user){
 				returnString += ","+id + "-"+players[id];
 			}
 			else{
-				returnString += id + ":"+players[id];
+				returnString += id + "-"+players[id];
 			}
 		}
 	}	

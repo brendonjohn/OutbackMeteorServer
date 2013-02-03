@@ -6,7 +6,7 @@ var listener_config = {
 };
 var test_mode = {
 	response: 'localhost',
-	port:8813,
+	port:8814,
 	message_count:0
 };
 var dgram = require("dgram");
@@ -15,7 +15,7 @@ var server = dgram.createSocket("udp4");
 server.on("message", function (msg, rinfo) {
 	var user_id = rinfo.address+":"+rinfo.port;
 	
-	if (TESTMODE == true){
+	if (TESTMODE === true){
 		console.log("Received: " + msg);
 	}
 		
@@ -24,6 +24,11 @@ server.on("message", function (msg, rinfo) {
 	
 	//The response to the client that has submitted the packet
 	var buf = new Buffer("hey hey hey: "+(test_mode['message_count']++));
+	server.send(buf, 0, buf.length,
+                  rinfo.port, rinfo.address,
+                  function(err, sent) {
+                    //Todo:....
+                  });
 });
 
 //receive udp packets from game clients

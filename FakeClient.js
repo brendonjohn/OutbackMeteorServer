@@ -4,7 +4,7 @@ var destination = {
 	port: 8813
 };
 var listener = {
-	port:8813
+	port:8814
 };
 var dgram = require('dgram');
 var messages = {
@@ -24,7 +24,7 @@ function SubmitLocationSequence(number, currentLocation){
 	var message = new Buffer(currentLocation.toString()) ;
 	client.send(message, 0, message.length, destination['port'], destination['address'], function(err, bytes) {
 			if (number>0)
-				SubmitLocationSequence(--number, currentLocation-0.4);
+				SubmitLocationSequence(--number, currentLocation-0.5);
 			else{
 				//client.close();
 				console.log("Initiating the send has finished");
@@ -40,7 +40,7 @@ client.on("listening", function () {
   console.log("client listening for server response \n" +
       address.address + ":" + address.port);
       
-      SubmitLocationSequence(100,1000);
+      SubmitLocationSequence(499,1000);
 });
 
 client.on("message", function(msg, rinfo){

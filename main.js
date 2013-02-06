@@ -4,40 +4,21 @@ var player_list = {};
 var listener_config = {
 	port:8813
 };
-var test_mode = {
-	response: 'localhost',
-	port:8814,
-	message_count:0
-};
-var dgram = require("dgram");
-var server = dgram.createSocket("udp4");
 
-server.on("message", function (msg, rinfo) {
-	var user_id = rinfo.address+":"+rinfo.port;
-	
-	if (TESTMODE === true){
-		console.log("Received: " + msg);
-	}
-		
-	//set the new location
-	player_list[user_id] = msg;
-	
-	//The response to the client that has submitted the packet
-	var buf = new Buffer("hey hey hey: "+(test_mode['message_count']++));
-	server.send(buf, 0, buf.length,
-                  rinfo.port, rinfo.address,
-                  function(err, sent) {
-                    //Todo:....
-                  });
-});
+var io = require("socket.io").listen(listener_config['port']);
 
-//receive udp packets from game clients
-server.on("listening", function () {
-  var address = server.address();
+//open socket with game clients
+io.sockets.on("connection", function (socket) {
+  //client has connected
   
-  //receive current location of the 
-  console.log("server listening " +
-      address.address + ":" + address.port);
+  socket.on('userdetails', function (details){
+  	//Todo: add player and current location to the player_list
+	socket.broadcast.emit("user connected");
+	console.log("user connected: "+details);
+  });
+  
+  socket.on('gameplay', function(message, locationUpdate){
+  	
+  });
+  
 });
-
-server.bind(listener_config['port']);

@@ -14,7 +14,11 @@ io.sockets.on("connection", function (socket) {
 	var uid = users++;
 	
 	socket.on('userdetails', function (location){
-		socket.broadcast.emit("user connect", uid);
+		socket.broadcast.emit("user connect", {
+			id:uid,
+			x: location.x,
+			y: location.y
+		});
 		console.log("user connected: " + uid.toString());
 		playerList[uid] = {
 			x: location.x,
@@ -25,10 +29,12 @@ io.sockets.on("connection", function (socket) {
 	socket.on('gameplay', function(locationUpdate){
 		playerList[uid].x = locationUpdate.x;
 		playerList[uid].y = locationUpdate.y;
+		console.log(uid +" updated");
 	});
 	
 	socket.on('disconnect', function(){
 		socket.broadcast.emit("user disconnect", uid);
 		delete playerList[uid];
+		console.log(uid + " disconnected");
 	});
 });

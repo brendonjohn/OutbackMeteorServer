@@ -12,6 +12,7 @@ var users = 0;
 io.sockets.on("connection", function (socket) {
 	//client has connected
 	var uid = users++;
+	socket.emit("start game", uid, playerList);
 	
 	socket.on('userdetails', function (location){
 		socket.broadcast.emit("user connect", {
@@ -19,6 +20,7 @@ io.sockets.on("connection", function (socket) {
 			x: location.x,
 			y: location.y
 		});
+
 		console.log("user connected: " + uid.toString());
 		playerList[uid] = {
 			x: location.x,
@@ -30,6 +32,8 @@ io.sockets.on("connection", function (socket) {
 		playerList[uid].x = locationUpdate.x;
 		playerList[uid].y = locationUpdate.y;
 		console.log(uid +" updated");
+		
+		io.sockets.emit('gameupdate', playerList);
 	});
 	
 	socket.on('disconnect', function(){

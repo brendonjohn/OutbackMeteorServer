@@ -4,6 +4,9 @@ var playerList = {};
 var listenerConfig = {
 	port:8813
 };
+var tickDelay = 20;
+var tickCounter = 0;
+
 
 var io = require("socket.io").listen(listenerConfig['port']);
 var users = 0;
@@ -32,8 +35,6 @@ io.sockets.on("connection", function (socket) {
 		playerList[uid].x = locationUpdate.x;
 		playerList[uid].y = locationUpdate.y;
 		console.log(uid +" updated");
-		
-		io.sockets.emit('gameupdate', playerList);
 	});
 	
 	socket.on('disconnect', function(){
@@ -42,3 +43,13 @@ io.sockets.on("connection", function (socket) {
 		console.log(uid + " disconnected");
 	});
 });
+
+function UpdateClient(){
+	if (tickCounter++ >= tickDelay){
+		tickCounter = 0;
+		io.sockets.emit('gameupdate', playerList);	
+	}
+	process.nextTick(UpdateClient);
+}
+
+UpdateClient();

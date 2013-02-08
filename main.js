@@ -4,7 +4,7 @@ var playerList = {};
 var listenerConfig = {
 	port:8813
 };
-var tickDelay = 20;
+var tickDelay = 100000;
 var tickCounter = 0;
 
 
